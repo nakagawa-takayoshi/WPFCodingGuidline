@@ -209,14 +209,17 @@ if (condition) return false;
 - First(), Last(), ElementAt()は内部的にループ処理を行うため、使用を避けてインデクサを使用するようにする
 
 例::
-[source, csharp]
+```csharp
 Bar bar = foo[0];
+```
 
 *NG例*
+```csharp
 [source, csharp]
 Bar bar = foo.First();
 Bar bar = foo.Last();
 Bar bar = foo.ElementAt(0);
+```
 
 == 空白、空行
 
@@ -225,20 +228,20 @@ Bar bar = foo.ElementAt(0);
 - 早期return、早期continueを使用した場合は、その後に空行を入れる
 
 例::
-[source, csharp]
-----
+```csharp
+
 public void Foo()
 {
     if (condition) return;
 
     bar();
 }
-----
+```
 
 - 連続して早期returen、早期continueを使用する場合は最後の処理文の後に空行を入れる
 例::
-[source, csharp]
-----
+```csharp
+
 public void Foo()
 {
     if (condition) return;
@@ -246,7 +249,7 @@ public void Foo()
 
     bar();
 }
-----
+```
  
 == コーディング指針
 
