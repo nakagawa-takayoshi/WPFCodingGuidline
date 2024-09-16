@@ -74,19 +74,15 @@ TextBoxBase
 例::
 
 [source, csharp]
-----
 private object _maxValue 
 private object _initializeValuie
-----
 
-NG例::
+*NG例*
 
 [source, csharp]
-----
-MNAX_VALUE +
-MaxValue +
-Max_Value +
-----
+MAX_VALUE 
+MaxValue 
+Max_Value 
 
 
 === フィールド
@@ -105,12 +101,11 @@ private string _name;
 Can~やHas~は使用する +
 ただし、クラス名などで推測できる場合は使用しないようにする。
 
-例::
+*NG例*
 [source, csharp]
-----
 public string Name { get; set; }
 public int Age { get; set; }
-----
+
 
 
 === メソッド
@@ -119,24 +114,20 @@ public int Age { get; set; }
 - 型変換のメソッドにはTo~を付ける
 例::
 [source, csharp]
-----
 int ToInt();
-----
+
 
 - 内部で型から型変換を行うメソッドには~To~を付ける
 
 例::
 [source, csharp]
-----
 Color ColorToBrush(Color color);
-----
 
-NG例::
+
+*NG例*
 [source, csharp]
-----
 Color ConvertoToBrush(Color color);
 Color ConvertColorToBrush(Color color);
-----
 
 === 引数名
 - LowerCamelCaseを使用する
@@ -175,9 +166,7 @@ Color ConvertColorToBrush(Color color);
 
 例::
 [source, csharp]
-----
 private Foo? _foo;
-----
 
 
 == インデント
@@ -191,22 +180,18 @@ private Foo? _foo;
 
 例::
 [source, csharp]
-----
 if (condition)
 {
     foor();
 }
-----
 
 
 - if文でretuen文が１文の場合は、中括弧を省略して一行で記述する
 
 例::
 [source, csharp]
-----
 if (condition) return;
 if (condition) return false; 
-----
 
 === 比較式
 - 基本的に小さい値を左辺に記述して、<=, < を使用するようにする +
