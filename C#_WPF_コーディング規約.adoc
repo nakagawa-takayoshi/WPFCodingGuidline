@@ -1,0 +1,232 @@
+
+:lang: ja
+:doctype: book
+:toc: left
+:toclevels: 3
+:toc-title: 目次
+:sectnums:
+:sectnumlevels: 4
+:sectlinks:
+:imagesdir: ./_images
+:icons: font
+:source-highlighter: coderay
+:example-caption: 例
+:table-caption: 表
+:figure-caption: 図
+:docname: = WPF コーディング規約
+:revnumber: 0.1
+:revdate: 2024/09/01
+
+= C# WPF コーディングガイドライン　2024
+
+== 概要
+
+この文書は、C# WPF アプリケーションのコーディング規約をまとめたものです。  +
+この文書は、プロジェクトの品質を向上させるためのものであり、プロジェクトにおいてはこの文書に従うことが望ましいです。
+
+ただし、この文書はあくまで一例であり、プロジェクトによっては適用しない場合もあります。
+
+== 命名規則
+
+全般的に命名はシンプルかつ明確にすることが重要です。  +
+冗長な命名や略語を使うことは避け、意味のある名前を使用するようにしてください。
+
+=== 名前空間
+
+- UpperCamelCase を使用する
+- クラス名と同じ名前を使用しない +
+この場合は、名前に複数形を使用する
+
+
+
+=== クラス名
+
+- UpperCamelCase を使用する
+- 名詞または名詞句を使用する
+- 複数形を使用しない +
+拡張メソッドはMicrosoftのガイドラインでは「ClassName [.underline]#Extensions#」としていますが、本プロジェクトでは「ClassName [.underline]#Extension#」とする事を
+
+
+=== インターフェース名
+- UpperCamelCase を使用する
+- インターフェースには接頭子に'I'~を付ける。機能を定義したものには接尾子として~'able'を付ける
+
+例::
+[source, csharp]
+IAnimal +
+IDispoabble
+
+
+=== 抽象クラス名
+- UpperCamelCase を使用する
+- 接尾子として~'Base'を付ける。
+
+例::
+[source, csharp]
+AnimalBase +
+TextBoxBase
+
+
+=== 定数名
+
+- アンダーバー'_'から始まるLowerCamelCaseを使用する
+
+例::
+
+[source, csharp]
+----
+private object _maxValue 
+private object _initializeValuie
+----
+
+NG例::
+
+[source, csharp]
+----
+MNAX_VALUE +
+MaxValue +
+Max_Value +
+----
+
+
+=== フィールド
+- publicなフィールドは使用しない
+- アンダーバー'_'から始まるLowerCamelCaseを使用する
+[source, csharp]
+private int _age;
+private string _name;
+
+例::
+
+=== プロパティ
+
+- UpperCamelCaseを使用する
+- bool型のプロパティには基本的にはIs~は付けない +
+Can~やHas~は使用する +
+ただし、クラス名などで推測できる場合は使用しないようにする。
+
+例::
+[source, csharp]
+----
+public string Name { get; set; }
+public int Age { get; set; }
+----
+
+
+=== メソッド
+
+- UpperCamelCaseを使用する
+- 型変換のメソッドにはTo~を付ける
+例::
+[source, csharp]
+----
+int ToInt();
+----
+
+- 内部で型から型変換を行うメソッドには~To~を付ける
+
+例::
+[source, csharp]
+----
+Color ColorToBrush(Color color);
+----
+
+NG例::
+[source, csharp]
+----
+Color ConvertoToBrush(Color color);
+Color ConvertColorToBrush(Color color);
+----
+
+=== 引数名
+- LowerCamelCaseを使用する
+
+
+=== ローカル変数
+- LowerCamelCaseを使用する
+
+=== イベント
+- UpperCamelCaseを使用する
+- 時制を表す場合には接尾子として「~ing」または「~ed」を付ける
+- クラス内のイベントメソッドは、接尾子としOn~として、引数はEventArgsの拡張クラスに限定する
+- クラス外のイベントメソッドは接頭子として<クラス名>_<イベント名>する
+
+== コーディング作法
+
+=== ファイル構成
+- 1ファイル1クラスとする
+- クラス名とファイル名は一致させる
+- クラス名とファイル名はUpperCamelCaseを使用する
+- publicな内部クラスの定義を禁止とする
+- 限定的にprivateな内部クラスを使用する事は許可する
+
+
+=== コメント
+- publicなメソッド、プロパティにはXMLコメントを記述する
+- コードの意図が明確でない場合はコメントを記述する
+- 暫定的なコードにはTODOコメントを記述する
+- 処理コードの中でメソッド名、変数名で意味が連想できる場合にはコメントを記述しない
+- 文末コメントは使用しない
+
+=== フィールド
+- publicのフィールドは使用しない
+- 可能な限りreadonlyを使用する
+- null値を許容するフィールドはnull許容型を使用する
+
+例::
+[source, csharp]
+----
+private Foo? _foo;
+----
+
+
+== インデント
+- インデントはスペース4つを使用する
+- 可能な限りインデトを深くしないようにする
+
+
+== 制御文
+
+- if文、for文、while文、switch文などの制御文は、中括弧を使用する
+
+例::
+[source, csharp]
+----
+if (condition)
+{
+    foor();
+}
+----
+
+
+- if文でretuen文が１文の場合は、中括弧を省略して一行で記述する
+
+例::
+[source, csharp]
+----
+if (condition) return;
+if (condition) return false; 
+----
+
+=== 比較式
+- 基本的に小さい値を左辺に記述して、<=, < を使用するようにする +
+(CやC++言語のように定数を左辺に置くという事は不要とする)
+
+
+== メソッド
+- 可能な限り、早期リターンを使用するようにする
+
+== 空白、空行
+
+- メソッド間にから最低でも１行の空行を入れる。+
+よほどの違和感がない限りは複数行でも可能とする
+- 早期return、早期continueを使用した場合は、その後に空行を入れる
+ 
+== コーディング指針
+
+- 1メソッド1機能を目指す
+- 1メソッドの行数は20行以内を目指す
+- 1メソッドの行数が20行を超える場合は、メソッドを分割する
+- メソッドの引数は3つ以内を目指す
+- メソッドの引数が3つを超える場合は、引数をクラスにまとめる
+
