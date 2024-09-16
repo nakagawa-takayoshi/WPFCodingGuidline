@@ -226,16 +226,19 @@ Bar bar = foo.ElementAt(0);
 
 例::
 [source, csharp]
+----
 public void Foo()
 {
     if (condition) return;
 
     bar();
 }
+----
 
 - 連続して早期returen、早期continueを使用する場合は最後の処理文の後に空行を入れる
 例::
 [source, csharp]
+----
 public void Foo()
 {
     if (condition) return;
@@ -243,6 +246,7 @@ public void Foo()
 
     bar();
 }
+----
  
 == コーディング指針
 
