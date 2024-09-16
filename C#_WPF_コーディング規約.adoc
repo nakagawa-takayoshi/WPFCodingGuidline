@@ -53,7 +53,7 @@
 
 例::
 [source, csharp]
-IAnimal +
+IAnimal
 IDispoabble
 
 
@@ -63,7 +63,7 @@ IDispoabble
 
 例::
 [source, csharp]
-AnimalBase +
+AnimalBase
 TextBoxBase
 
 
@@ -88,17 +88,17 @@ Max_Value
 === フィールド
 - publicなフィールドは使用しない
 - アンダーバー'_'から始まるLowerCamelCaseを使用する
+
+例::
 [source, csharp]
 private int _age;
 private string _name;
-
-例::
 
 === プロパティ
 
 - UpperCamelCaseを使用する
 - bool型のプロパティには基本的にはIs~は付けない +
-Can~やHas~は使用する +
+Can~や Has~は許容はするが、クラス名、またはクラス内にIs, Can、Hasが混在していなければ使用しないようにする +
 ただし、クラス名などで推測できる場合は使用しないようにする。
 
 *NG例*
@@ -197,15 +197,52 @@ if (condition) return false;
 - 基本的に小さい値を左辺に記述して、<=, < を使用するようにする +
 (CやC++言語のように定数を左辺に置くという事は不要とする)
 
+== LINQ文
+- 積極的にLINQ文を使用する
+
 
 == メソッド
 - 可能な限り、早期リターンを使用するようにする
+
+== 注意メソッド
+- FoEachメソッドを使用したいが為にToList()やToArray()を使用しないようにする
+- First(), Last(), ElementAt()は内部的にループ処理を行うため、使用を避けてインデクサを使用するようにする
+
+例::
+[source, csharp]
+Bar bar = foo[0];
+
+*NG例*
+[source, csharp]
+Bar bar = foo.First();
+Bar bar = foo.Last();
+Bar bar = foo.ElementAt(0);
 
 == 空白、空行
 
 - メソッド間にから最低でも１行の空行を入れる。+
 よほどの違和感がない限りは複数行でも可能とする
 - 早期return、早期continueを使用した場合は、その後に空行を入れる
+
+例::
+[source, csharp]
+public void Foo()
+{
+    if (condition) return;
+
+    bar();
+}
+
+- 連続して早期returen、早期continueを使用する場合は最後の処理文の後に空行を入れる
+例::
+[source, csharp]
+public void Foo()
+{
+    if (condition) return;
+    if (forvar < 1) return;
+
+    bar();
+}
  
 == コーディング指針
 
